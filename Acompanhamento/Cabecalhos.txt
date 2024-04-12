@@ -24,3 +24,7 @@ Nº Pedido; Parcela; Data Pedido; Cód cliente; Cliente; Vencimento; Conta; Juro
 
 ESTOQUE CCV
 Cód. de Barra; Descrição; Estoque; Compra R$; Custo R$; Venda R$; % L;
+
+PADRÃO NOME DAS PLANILHAS NAS PASTAS
+YYYY MM Lucratividade.xlsx
+YYYY MM Estoque CCV.xlsx
