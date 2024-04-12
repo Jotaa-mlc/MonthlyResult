@@ -1,0 +1,26 @@
+FATURAMENTO
+N° Doc; Data; Cód. cliente; Cliente; Total Final; Dinheiro; Cheque; Cartão; Aprazo; Financ.; NFe; N° NFe; NFCe; N° NFCe;
+
+LANÇAMENTOS LIVRO CAIXA
+Seq lançamento; Cod caixa; Data lançamento; Tipo lançamento; Lançar caixa; Referencia; Vlr lançamento; Lançar plano contas; Cod conta; Cod subconta; Num pedido;
+
+LUCRATIVIDADES
+Cód de Barra;Total Venda;Descrição do Produto;Quantidade Total; Custo; Lucro B; % Luc B;
+
+RESUMO DE ENTRADAS
+Código Produto; Descrição; Quantidade; Total Item; Valor Médio;
+
+CONTAS A PAGAR
+Nº Conta; Cód. Fornecedor; Fornecedor; Referencia; Vencimento; Saldo; Tipo Doc;
+
+CONTAS A RECEBER
+Nº Pedido; Parcela; Data Pedido; Cód cliente; Cliente; Cidade; Vencimento; Conta;  Nº NF;
+
+CONTAS PAGAS
+Nº Conta; Cód. Fornecedor; Fornecedor; Referencia; Vencimento; Data Pagamento; Juros; Desconto; Pagamento;
+
+CONTAS RECEBIDAS
+Nº Pedido; Parcela; Data Pedido; Cód cliente; Cliente; Vencimento; Conta; Juros; Desconto; Recebido; Data Pagamento; Dias  Nº NF;
+
+ESTOQUE CCV
+Cód. de Barra; Descrição; Estoque; Compra R$; Custo R$; Venda R$; % L;
