@@ -1,0 +1,9 @@
+def init():
+    global sheets_folder
+    sheets_folder = "Acompanhamento\\"
+    global document_file
+    document_file = "GERAL - Documentos.xlsx"
+    global payment_file
+    payment_file = "GERAL - Contas a pagar.xlsx"
+    global recieve_file
+    recieve_file = "GERAL - Contas a receber.xlsx"
