@@ -1,4 +1,5 @@
 import settings
+import common
 import datetime
 from bills_plan import BillsPlan
 from openpyxl import load_workbook
@@ -11,23 +12,27 @@ class MonthResult:
     
     def Calc_receitas(self) -> None:
         file_path = settings.sheets_folder + settings.document_file
-        wb = load_workbook(file_path, read_only = True)
+        wb = load_workbook(file_path)
         document_ws = wb.active
 
         for payment_form in document_ws['V:AA']:
             for doc in payment_form:
-                match doc.column_letter:
-                    case 'V': #DINHEIRO
-                        self.bills_plan.account[0].sub_accounts[0].value += doc.value
-                    case 'W': #CHEQUE
-                        self.bills_plan.account[0].sub_accounts[1].value += doc.value
-                    case 'X': #TRANSFERENCIA / PIX
-                        self.bills_plan.account[0].sub_accounts[5].value += doc.value
-                    case 'Y': #CARTAO
-                        self.bills_plan.account[0].sub_accounts[2].value += doc.value
-                    case 'Z': #FATURADO
-                        self.bills_plan.account[0].sub_accounts[3].value += doc.value
-                    case 'AA': #FINANCEIRA
-                        self.bills_plan.account[0].sub_accounts[3].value += doc.value
+                is_pedido = document_ws["A" + str(doc.row)].value == "Pedido   Saída"
+                is_fechado = document_ws["C" + str(doc.row)].value == "Fechado"
+                is_from_month = common.isFromMonth(document_ws["I" + str(doc.row)].value, self.month, self.year) if is_fechado else False
+                if is_pedido and is_from_month:
+                    match doc.column_letter:
+                        case 'V': #DINHEIRO
+                            self.bills_plan.accounts[0].sub_accounts[0].value += doc.value
+                        case 'W': #CHEQUE
+                            self.bills_plan.accounts[0].sub_accounts[1].value += doc.value
+                        case 'X': #TRANSFERENCIA / PIX
+                            self.bills_plan.accounts[0].sub_accounts[5].value += doc.value
+                        case 'Y': #CARTAO
+                            self.bills_plan.accounts[0].sub_accounts[2].value += doc.value
+                        case 'Z': #FATURADO
+                            self.bills_plan.accounts[0].sub_accounts[3].value += doc.value
+                        case 'AA': #FINANCEIRA
+                            self.bills_plan.accounts[0].sub_accounts[3].value += doc.value
         
         self.bills_plan.accounts[0].CalculateAcount()
