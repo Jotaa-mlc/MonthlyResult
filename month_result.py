@@ -1,8 +1,6 @@
 import settings
 import common
-import datetime
 from bills_plan import BillsPlan
-from openpyxl import load_workbook
 
 class MonthResult:
     def __init__(self, _month:str, _year:str) -> None:
@@ -21,7 +19,6 @@ class MonthResult:
         stock_ws = common.LoadSheet(file_path)
         
         if stock_ws == None:
-            print(f"ERRO: Não foi possível carregar o arquivo {file_path}")
             return None
         
         for product_row in range(1, stock_ws.max_row):
@@ -33,7 +30,6 @@ class MonthResult:
         document_ws = common.LoadSheet(settings.document_file)
 
         if document_ws == None:
-            print(f"ERRO: Não foi possível carregar o arquivo {settings.document_file}")
             return None
         
         for document_row in range(1, document_ws.max_row):
@@ -54,9 +50,9 @@ class MonthResult:
     def CalcDespesas(self) -> None:
         #CALCULANDO DESPESAS DA TABELA DE CONTAS A PAGAR
         payments_ws = common.LoadSheet(settings.payment_file)
+        cashier_ws = common.LoadSheet(settings.cashier_file)
         
-        if payments_ws == None:
-            print(f"ERRO: Não foi possível carregar o arquivo {settings.payment_file}")
+        if payments_ws == None or cashier_ws == None:
             return None
         
         for payment_row in range(1, payments_ws.max_row):
@@ -71,12 +67,6 @@ class MonthResult:
                 self.bills_plan.accounts[cod_conta].sub_accounts[cod_subconta].value -= payments_ws["S" + str(payment_row)].value
         
         #CALCULANDO DESPESAS DA TABELA DE LANCAMENTOS LIVRO CAIXA
-        cashier_ws = common.LoadSheet(settings.cashier_file)
-        
-        if cashier_ws == None:
-            print(f"ERRO: Não foi possível carregar o arquivo {settings.cashier_file}")
-            return None
-        
         for payment_row in range(1, cashier_ws.max_row):
             is_2plano_contas = cashier_ws["H" + str(payment_row)].value == "True"
             is_from_month = common.IsFromMonth(cashier_ws["C" + str(payment_row)].value, self.month, self.year) if is_2plano_contas else False

@@ -80,5 +80,9 @@ class BillsPlan:
                                     Sub_account("Peças"),
                                     Sub_account("Emplacamento"),
                                     Sub_account("Seguro"),
-                                    Sub_account("Infrações")])
+                                    Sub_account("Infrações")]),
+                        
+                        Account("Emprestimos",
+                                    [Sub_account("Pronampe Itau"),
+                                    Sub_account("Pronampe Banco do Brasil")])
                         ]

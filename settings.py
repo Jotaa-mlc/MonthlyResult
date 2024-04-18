@@ -9,5 +9,7 @@ def init():
     recieve_file = "GERAL - Contas a receber.xlsx"
     global cashier_file
     cashier_file = "GERAL - Lancamentos Livro Caixa.xlsx"
+    global export_file
+    export_file = "Resultado Hidraucenter Nordeste.xlsx"
     global print_size
     print_size = 50

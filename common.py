@@ -20,6 +20,7 @@ def LoadSheet(file:str) -> Worksheet:
     try:
         wb = load_workbook(file_path)
     except:
+        print(f"ERRO: Não foi possível carregar o arquivo {file}")
         return None
     return wb.active
 
