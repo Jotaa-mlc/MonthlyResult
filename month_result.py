@@ -17,9 +17,11 @@ class MonthResult:
             self.result += account.value
     
     def CalcStockCost(self) -> None:
-        stock_ws = common.LoadSheet(common.StockCCVFilePath(self.month, self.year))
+        file_path = common.StockCCVFilePath(self.month, self.year)
+        stock_ws = common.LoadSheet(file_path)
         
         if stock_ws == None:
+            print(f"ERRO: Não foi possível carregar o arquivo {file_path}")
             return None
         
         for product_row in range(1, stock_ws.max_row):
@@ -31,6 +33,7 @@ class MonthResult:
         document_ws = common.LoadSheet(settings.document_file)
 
         if document_ws == None:
+            print(f"ERRO: Não foi possível carregar o arquivo {settings.document_file}")
             return None
         
         for document_row in range(1, document_ws.max_row):
@@ -53,6 +56,7 @@ class MonthResult:
         payments_ws = common.LoadSheet(settings.payment_file)
         
         if payments_ws == None:
+            print(f"ERRO: Não foi possível carregar o arquivo {settings.payment_file}")
             return None
         
         for payment_row in range(1, payments_ws.max_row):
@@ -70,6 +74,7 @@ class MonthResult:
         cashier_ws = common.LoadSheet(settings.cashier_file)
         
         if cashier_ws == None:
+            print(f"ERRO: Não foi possível carregar o arquivo {settings.cashier_file}")
             return None
         
         for payment_row in range(1, cashier_ws.max_row):
