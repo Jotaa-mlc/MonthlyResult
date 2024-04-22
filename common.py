@@ -1,28 +1,33 @@
 from datetime import datetime
 from openpyxl import load_workbook
-from openpyxl.worksheet.worksheet import Worksheet
+#from openpyxl.worksheet.worksheet import Worksheet
+from openpyxl import Workbook
 import calendar
 import settings
 
-def IsFromMonth(date, month_str:str, year_str:str):
-    first_day = datetime(int(year_str), int(month_str), 1)
+def IsFromMonth(date, month:int, year:int):
+    first_day = datetime(year, month, 1)
     
-    last_day = calendar.monthrange(int(year_str), int(month_str))[-1]
-    last_day = datetime(int(year_str), int(month_str), last_day)
+    last_day = calendar.monthrange(year, month)[-1]
+    last_day = datetime(year, month, last_day)
     
     if ((first_day <= date) and (date <= last_day)):
         return True
     else:
         return False
 
-def LoadSheet(file:str) -> Worksheet:
+def LoadSheet(file:str) -> Workbook | None:
     file_path = settings.sheets_folder + file
     try:
-        wb = load_workbook(file_path)
-    except:
-        print(f"ERRO: Não foi possível carregar o arquivo {file}")
+        wb = load_workbook(filename=file_path)
+    except FileNotFoundError:
+        print(f"ERRO: Não foi possível encontrar o arquivo {file_path}")
         return None
-    return wb.active
+    except Exception as error:
+        print(f"ERRO DESCONHECIDO: Não foi possível carregar o arquivo {file_path}")
+        #print(error)
+        return None
+    return wb
 
 def FormatPrint(title:str, value, size = settings.print_size) -> str:
     value_str = f"R$ {value:_.2f}"
@@ -31,7 +36,9 @@ def FormatPrint(title:str, value, size = settings.print_size) -> str:
     txt += ' ' * (size - len(txt) -len(value_str)) + value_str
     return txt
 
-def StockCCVFilePath(month:str, year:str) -> str:
-    sub_folder = year + ' ' + month + '\\'
-    file_name = year + ' ' + month + ' Estoque CCV.xlsx'
+def SubFilePath(month:int, year:int, estoque:bool) -> str:
+    year_str = "{:04n}".format(year)
+    month_str = "{:02n}".format(month)
+    sub_folder = year_str + ' ' + month_str + '/'
+    file_name = year_str + ' ' + month_str + (' Estoque CCV.xlsx' if estoque else ' Lucratividades.xlsx')
     return sub_folder + file_name

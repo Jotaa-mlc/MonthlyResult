@@ -1,6 +1,6 @@
 def init():
     global sheets_folder
-    sheets_folder = "Acompanhamento\\"
+    sheets_folder = "Acompanhamento/"
     global document_file
     document_file = "GERAL - Documentos.xlsx"
     global payment_file

@@ -1,4 +1,5 @@
 test.py
+*.xlsx
 ~$*
 /__pycache__
 /Acompanhamento
