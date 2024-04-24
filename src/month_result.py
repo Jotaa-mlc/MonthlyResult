@@ -1,18 +1,20 @@
-import settings
-import common
+import settings, common
 from bills_plan import BillsPlan
 
 class MonthResult:
     def __init__(self, _month:int, _year:int) -> None:
         self.month = _month
         self.year = _year
-        self.result = 0
-        self.stock_cost = 0
+        self.result = 0.0
+        self.result_percentage = 0.0
+        self.stock_cost = 0.0
         self.bills_plan = BillsPlan()
     
     def CalcResult(self) -> None:
         for account in self.bills_plan.accounts:
             self.result += account.value
+        
+        self.result_percentage = self.result / self.bills_plan.accounts[0].value
     
     def CalcStockCost(self) -> None:
         file_path = common.SubFilePath(self.month, self.year, True)
@@ -120,15 +122,14 @@ class MonthResult:
             
         for account in self.bills_plan.accounts:
             account.CalculateAccount()
+            account.participation = account.value / self.bills_plan.accounts[0].value
         
         payments_wb.close()
         cashier_wb.close()
             
-        
     def PrintBillsPlan(self) -> None:
         for account in self.bills_plan.accounts:
             account.PrintAccount()
             
         print(common.FormatPrint('Resultado', self.result, settings.print_size + 4))
         print(common.FormatPrint('Estoque - Custo', self.stock_cost, settings.print_size + 4))
-        

@@ -1,5 +1,4 @@
-from bills import Account
-from bills import Sub_account
+from bills import Account, Sub_account
 
 class BillsPlan:
     def __init__(self) -> None:

@@ -47,3 +47,7 @@ class stockCCV_columns():
 class profits_columns():
     def __init__(self) -> None:
         self.cost_prod = 'E'
+class export_sheets():
+    def __init__(self) -> None:
+        self.geral = 'GERAL'
+        self.participation = 'Participações'
